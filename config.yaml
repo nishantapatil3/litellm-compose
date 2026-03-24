@@ -24,6 +24,37 @@ model_list:
   #     model: claude-3-sonnet-20240229
   #     api_key: os.environ/ANTHROPIC_API_KEY
 
+  # NVIDIA NIM Models
+  - model_name: meta-llama-3-8b-instruct
+    litellm_params:
+      model: nvidia_nim/meta-llama-3-8b-instruct
+      api_key: os.environ/NVIDIA_NIM_API_KEY
+
+  - model_name: meta-llama-3-70b-instruct
+    litellm_params:
+      model: nvidia_nim/meta-llama-3-70b-instruct
+      api_key: os.environ/NVIDIA_NIM_API_KEY
+
+  - model_name: mistral-7b-instruct-v0.2
+    litellm_params:
+      model: nvidia_nim/mistral-7b-instruct-v0.2
+      api_key: os.environ/NVIDIA_NIM_API_KEY
+
+  - model_name: mistralai-mixtral-8x7b-instruct-v0.1
+    litellm_params:
+      model: nvidia_nim/mistralai-mixtral-8x7b-instruct-v0.1
+      api_key: os.environ/NVIDIA_NIM_API_KEY
+
+  - model_name: nvidia-nemotron-4-340b-instruct
+    litellm_params:
+      model: nvidia_nim/nvidia-nemotron-4-340b-instruct
+      api_key: os.environ/NVIDIA_NIM_API_KEY
+
+  - model_name: kimi-k2-instruct
+    litellm_params:
+      model: nvidia_nim/moonshotai/kimi-k2-instruct
+      api_key: os.environ/NVIDIA_NIM_API_KEY
+
   # Azure OpenAI
   # - model_name: gpt-4-azure
   #   litellm_params:

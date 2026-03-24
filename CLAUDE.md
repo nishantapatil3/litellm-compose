@@ -33,6 +33,28 @@ This project provides a Docker Compose setup for running LiteLLM proxy server wi
 - Environment variables in `.env` include database credentials and API keys
 - Database connection string format: `postgresql://user:password@db:5432/litellm`
 
+## Claude Code CLI Setup
+
+To use this LiteLLM proxy with Claude Code CLI, configure the following environment variables:
+
+```json
+{
+  "env": {
+    "ANTHROPIC_BASE_URL": "http://127.0.0.1:4000/",
+    "ANTHROPIC_AUTH_TOKEN": "sk-1234",
+    "ANTHROPIC_DEFAULT_SONNET_MODEL": "nvidia_nim/moonshotai/kimi-k2-instruct",
+    "ANTHROPIC_DEFAULT_HAIKU_MODEL": "nvidia_nim/moonshotai/kimi-k2-instruct",
+    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1",
+    "CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS": "1"
+  }
+}
+```
+
+**Notes:**
+- `ANTHROPIC_BASE_URL` points to the LiteLLM proxy running locally on port 4000
+- `ANTHROPIC_AUTH_TOKEN` should match the API key configured in your LiteLLM setup
+- Model names should correspond to models defined in your `config.yaml`
+
 ## Development Guidelines
 - Use Taskfile commands instead of direct docker-compose commands
 - Keep sensitive data in `.env` (gitignored)
