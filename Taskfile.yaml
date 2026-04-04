@@ -10,6 +10,17 @@ tasks:
     desc: Start the services
     cmds:
       - docker-compose up -d
+      - |
+        echo ""
+        echo "=========================================="
+        echo "  Services started successfully!"
+        echo "=========================================="
+        echo ""
+        echo "  LiteLLM Proxy UI: http://localhost:4000/ui/"
+        echo "  Username: $(grep UI_USERNAME .env | cut -d '=' -f2)"
+        echo "  Password: $(grep UI_PASSWORD .env | cut -d '=' -f2)"
+        echo ""
+        echo "=========================================="
 
   down:
     desc: Stop the services
