@@ -35,4 +35,4 @@ tasks:
   logs:
     desc: View logs (use -f to follow)
     cmds:
-      - docker-compose logs {{.CLI_ARGS}}
+      - docker-compose logs {{.CLI_ARGS}} -f

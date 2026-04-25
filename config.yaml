@@ -33,7 +33,7 @@ model_list:
 
 # General settings
 litellm_settings:
-  drop_params: false
+  drop_params: true
   set_verbose: false
   # json_logs: true
 

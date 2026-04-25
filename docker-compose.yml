@@ -17,6 +17,8 @@ services:
       - .env # Load local .env file
     depends_on:
       - db # Indicates that this service depends on the 'db' service, ensuring 'db' starts first
+    networks:
+      - common-compose_default
     healthcheck: # Defines the health check configuration for the container
       test:
         - CMD-SHELL
@@ -38,6 +40,8 @@ services:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data # Persists Postgres data across container restarts
+    networks:
+      - common-compose_default
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -d litellm -U llmproxy"]
       interval: 1s
@@ -55,6 +59,8 @@ services:
       - "--config.file=/etc/prometheus/prometheus.yml"
       - "--storage.tsdb.path=/prometheus"
       - "--storage.tsdb.retention.time=15d"
+    networks:
+      - common-compose_default
     restart: always
 
 volumes:
@@ -62,3 +68,7 @@ volumes:
     driver: local
   postgres_data:
     name: litellm_postgres_data # Named volume for Postgres data persistence
+
+networks:
+  common-compose_default:
+    external: true
