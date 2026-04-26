@@ -19,6 +19,18 @@ model_list:
       model: openrouter/openrouter/free
       api_key: os.environ/OPENROUTER_API_KEY
 
+  # Groq Models
+  - model_name: groq/openai/gpt-oss-120b
+    litellm_params:
+      model: groq/openai/gpt-oss-120b
+      api_key: os.environ/GROQ_API_KEY
+
+  # Gemini Models
+  - model_name: gemini/gemma-3-27b-it
+    litellm_params:
+      model: gemini/gemma-3-27b-it
+      api_key: os.environ/GEMINI_API_KEY
+
 # Router settings
 # router_settings:
 #   routing_strategy: least-busy
