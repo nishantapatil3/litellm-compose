@@ -14,9 +14,9 @@ model_list:
       api_key: os.environ/NVIDIA_NIM_API_KEY
 
   # OpenRouter Free Model
-  - model_name: openrouter-free
+  - model_name: openrouter/free
     litellm_params:
-      model: openrouter/free
+      model: openrouter/openrouter/free
       api_key: os.environ/OPENROUTER_API_KEY
 
 # Router settings
