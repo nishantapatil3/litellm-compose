@@ -19,12 +19,6 @@ model_list:
       model: openrouter/free
       api_key: os.environ/OPENROUTER_API_KEY
 
-  # Gemini Model
-  - model_name: gemini-gemma-4-31b-it
-    litellm_params:
-      model: gemini/gemma-4-31b-it
-      api_key: os.environ/GEMINI_API_KEY
-
 # Router settings
 # router_settings:
 #   routing_strategy: least-busy

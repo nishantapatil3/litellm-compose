@@ -6,10 +6,15 @@ tasks:
     cmds:
       - task --list
 
+  init:
+    desc: Initialize the environment (create network)
+    cmds:
+      - docker network create docker-compose_default || true # Create network if it doesn't exist
+
   up:
     desc: Start the services
     cmds:
-      - docker-compose up -d
+      - docker compose up -d
       - |
         echo ""
         echo "=========================================="
@@ -25,14 +30,14 @@ tasks:
   down:
     desc: Stop the services
     cmds:
-      - docker-compose down
+      - docker compose down
 
   down-volumes:
     desc: Stop the services and remove volumes
     cmds:
-      - docker-compose down -v
+      - docker compose down -v
 
   logs:
     desc: View logs (use -f to follow)
     cmds:
-      - docker-compose logs {{.CLI_ARGS}} -f
+      - docker compose logs {{.CLI_ARGS}} -f
