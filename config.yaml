@@ -3,28 +3,16 @@
 
 model_list:
   # NVIDIA NIM Models
-  - model_name: nvidia_nim/nvidia/nemotron-3-super-120b-a12b
+  # Rank: 10
+  - model_name: nvidia_nim/z-ai/glm-5.1
     litellm_params:
-      model: nvidia_nim/nvidia/nemotron-3-super-120b-a12b
+      model: nvidia_nim/z-ai/glm-5.1
       api_key: os.environ/NVIDIA_NIM_API_KEY
+  # Rank: 45
   - model_name: nvidia_nim/qwen/qwen3.5-397b-a17b
     litellm_params:
       model: nvidia_nim/qwen/qwen3.5-397b-a17b
       api_key: os.environ/NVIDIA_NIM_API_KEY
-  - model_name: nvidia_nim/deepseek-ai/deepseek-v4-pro
-    litellm_params:
-      model: nvidia_nim/deepseek-ai/deepseek-v4-pro
-      api_key: os.environ/NVIDIA_NIM_API_KEY
-
-  # OpenRouter Free Model
-  - model_name: openrouter/openai/gpt-oss-120b:free
-    litellm_params:
-      model: openrouter/openai/gpt-oss-120b:free
-      api_key: os.environ/OPENROUTER_API_KEY
-  - model_name: openrouter/minimax/minimax-m2.5:free
-    litellm_params:
-      model: openrouter/minimax/minimax-m2.5:free
-      api_key: os.environ/OPENROUTER_API_KEY
 
 # Router settings
 # router_settings:
