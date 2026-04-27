@@ -3,33 +3,28 @@
 
 model_list:
   # NVIDIA NIM Models
-  - model_name: nvidia_nim/openai/gpt-oss-20b
+  - model_name: nvidia_nim/nvidia/nemotron-3-super-120b-a12b
     litellm_params:
-      model: nvidia_nim/openai/gpt-oss-20b
+      model: nvidia_nim/nvidia/nemotron-3-super-120b-a12b
       api_key: os.environ/NVIDIA_NIM_API_KEY
-
-  - model_name: nvidia_nim/openai/gpt-oss-120b
+  - model_name: nvidia_nim/qwen/qwen3.5-397b-a17b
     litellm_params:
-      model: nvidia_nim/openai/gpt-oss-120b
+      model: nvidia_nim/qwen/qwen3.5-397b-a17b
+      api_key: os.environ/NVIDIA_NIM_API_KEY
+  - model_name: nvidia_nim/deepseek-ai/deepseek-v4-pro
+    litellm_params:
+      model: nvidia_nim/deepseek-ai/deepseek-v4-pro
       api_key: os.environ/NVIDIA_NIM_API_KEY
 
   # OpenRouter Free Model
-  - model_name: openrouter/free
+  - model_name: openrouter/openai/gpt-oss-120b:free
     litellm_params:
-      model: openrouter/openrouter/free
+      model: openrouter/openai/gpt-oss-120b:free
       api_key: os.environ/OPENROUTER_API_KEY
-
-  # Groq Models
-  - model_name: groq/openai/gpt-oss-120b
+  - model_name: openrouter/minimax/minimax-m2.5:free
     litellm_params:
-      model: groq/openai/gpt-oss-120b
-      api_key: os.environ/GROQ_API_KEY
-
-  # Gemini Models
-  - model_name: gemini/gemma-3-27b-it
-    litellm_params:
-      model: gemini/gemma-3-27b-it
-      api_key: os.environ/GEMINI_API_KEY
+      model: openrouter/minimax/minimax-m2.5:free
+      api_key: os.environ/OPENROUTER_API_KEY
 
 # Router settings
 # router_settings:
