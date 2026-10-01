@@ -1,0 +1,90 @@
+services:
+  litellm-app:
+    image: docker.litellm.ai/berriai/litellm:latest
+    restart: always
+    #########################################
+    ## Uncomment these lines to start proxy with a config.yaml file ##
+    volumes:
+      - ./config.yaml:/app/config.yaml
+      - ./guardrails/no_file_input_guardrail.py:/app/no_file_input_guardrail.py
+    command:
+      - "--config=/app/config.yaml"
+    ##############################################
+    ports:
+      - "4000:4000" # Map the container port to the host, change the host port if necessary
+    environment:
+      TZ: "America/Los_Angeles"
+      DATABASE_URL: "postgresql://llmproxy:dbpassword9090@db:5432/litellm"
+      STORE_MODEL_IN_DB: "True" # allows adding models to proxy via UI
+      REDIS_URL: "redis://:dbpassword9090@redis:6379/0"
+      # SERVER_ROOT_PATH: "/litellm"
+    env_file:
+      - .env # Load local .env file
+    # Traefik exposure disabled: service is reachable on the LAN only (port 4000).
+    # labels:
+    #   - "traefik.enable=true"
+    #   - "traefik.docker.network=stacks-network"
+    #   - "traefik.http.routers.litellm.rule=Host(`litellm.nsphome.duckdns.org`)"
+    #   - "traefik.http.routers.litellm.entrypoints=websecure"
+    #   - "traefik.http.routers.litellm.tls=true"
+    #   - "traefik.http.routers.litellm.tls.certresolver=letsencrypt"
+    #   - "traefik.http.routers.litellm.tls.domains[0].main=nsphome.duckdns.org"
+    #   - "traefik.http.routers.litellm.tls.domains[0].sans=*.nsphome.duckdns.org"
+    #   - "traefik.http.routers.litellm.middlewares=security-headers@file"
+    #   - "traefik.http.services.litellm.loadbalancer.server.port=4000"
+    depends_on:
+      - db # Indicates that this service depends on the 'db' service, ensuring 'db' starts first
+      - redis
+    networks:
+      - stacks-network
+    healthcheck: # Defines the health check configuration for the container
+      test:
+        - CMD-SHELL
+        - python3 -c "import urllib.request; urllib.request.urlopen('http://localhost:4000/health/liveliness')" # Command to execute for health check
+      interval: 30s # Perform health check every 30 seconds
+      timeout: 10s # Health check command times out after 10 seconds
+      retries: 3 # Retry up to 3 times if health check fails
+      start_period: 40s # Wait 40 seconds after container start before beginning health checks
+
+  db:
+    image: postgres:latest
+    restart: always
+    command: ["postgres", "-c", "timezone=America/Los_Angeles"]
+    environment:
+      TZ: "America/Los_Angeles"
+      POSTGRES_DB: litellm
+      POSTGRES_USER: llmproxy
+      POSTGRES_PASSWORD: dbpassword9090
+    volumes:
+      - postgres_data:/var/lib/postgresql # PostgreSQL 18+ stores data in major-version-specific subdirectories
+    networks:
+      - stacks-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -d litellm -U llmproxy"]
+      interval: 1s
+      timeout: 5s
+      retries: 10
+
+  redis:
+    image: redis:latest
+    restart: always
+    command: ["redis-server", "--appendonly", "yes", "--requirepass", "dbpassword9090"]
+    volumes:
+      - redis_data:/data
+    networks:
+      - stacks-network
+    healthcheck:
+      test: ["CMD-SHELL", "REDISCLI_AUTH=dbpassword9090 redis-cli ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+volumes:
+  postgres_data:
+    name: litellm_postgres_data # Named volume for Postgres data persistence
+  redis_data:
+    name: litellm_redis_data # Persists LiteLLM Redis cache data across container restarts
+
+networks:
+  stacks-network:
+    external: true
